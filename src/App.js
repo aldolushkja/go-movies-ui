@@ -28,7 +28,7 @@ export default function App() {
                     </div>
                     <div className="col-md-10">
                         <Switch>
-                            <Route path="/movies/:id" component={OneMovie}></Route>
+                            <Route path="/movies/:id" component={OneMovie}/>
                             <Route path="/movies">
                                 <Movies/>
                             </Route>
