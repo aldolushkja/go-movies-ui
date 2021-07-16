@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Link, Route, Switch, useParams, useRouteMatch} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import Movies from './components/Movies';
 import Home from './components/Home';
 import Admin from './components/Admin';
@@ -34,16 +34,9 @@ export default function App() {
                                 <Movies/>
                             </Route>
                             <Route path="/genre/:genre_id" component={OneGenre}/>
-                            {/*<OneGenre/>*/}
                             <Route exact path="/genres">
                                 <Genres/>
                             </Route>
-                            {/*<Route exact path="/by-category/drama"*/}
-                            {/*       render={(props) => <Genres {...props} title={`Drama`}/>}>*/}
-                            {/*</Route>*/}
-                            {/*<Route exact path="/by-category/comedy"*/}
-                            {/*       render={(props) => <Genres {...props} title={`Comedy`}/>}>*/}
-                            {/*</Route>*/}
                             <Route path="/admin">
                                 <Admin/>
                             </Route>
@@ -56,24 +49,4 @@ export default function App() {
             </div>
         </Router>
     );
-}
-
-function MovieDetails() {
-    let {id} = useParams();
-    return (
-        <h1>Movie Details {id}</h1>
-    )
-}
-
-function CategoryPage() {
-    let {path, url} = useRouteMatch();
-    return (
-        <div>
-            <h2>Categories</h2>
-            <ul>
-                <li><Link to={`${path}/drama`}>Drama</Link></li>
-                <li><Link to={`${url}/comedy`}>Comedy</Link></li>
-            </ul>
-        </div>
-    )
 }

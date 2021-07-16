@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 export default class OneGenre extends Component {
 
-    state = {movies: [], isLoaded: false, error: null}
+    state = {movies: [], isLoaded: false, error: null, genreName: ""}
 
     componentDidMount() {
         fetch('http://localhost:4000/v1/movies/' + this.props.match.params.genre_id)
@@ -21,7 +21,8 @@ export default class OneGenre extends Component {
             .then(json => {
                 this.setState({
                         movies: json.movies,
-                        isLoaded: true
+                        isLoaded: true,
+                        genreName: this.props.location.genre_name,
                     },
                     (error) => {
                         this.setState({
@@ -33,7 +34,7 @@ export default class OneGenre extends Component {
     }
 
     render() {
-        let {movies, isLoaded, error} = this.state
+        let {movies, isLoaded, error, genreName} = this.state
 
         if (!movies) {
             movies = []
@@ -46,7 +47,7 @@ export default class OneGenre extends Component {
             return (
                 <Fragment>
                     <div>
-                        <h2>Genre: </h2>
+                        <h2>Genre: {genreName}</h2>
                         <div className="list-group">
                             {movies.map((m, index) => (
                                 <Link key={index} to={`/movie/${m.id}`}
