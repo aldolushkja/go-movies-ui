@@ -1,13 +1,13 @@
+import React, {Component, Fragment} from 'react';
 import {Link} from "react-router-dom";
-import React, {Component, Fragment} from "react";
 
-export default class Genres extends Component {
-    // let {path, url} = useRouteMatch();
 
-    state = {genres: [], isLoaded: false, error: null}
+export default class OneGenre extends Component {
+
+    state = {movies: [], isLoaded: false, error: null}
 
     componentDidMount() {
-        fetch('http://localhost:4000/v1/genres')
+        fetch('http://localhost:4000/v1/movies/' + this.props.match.params.genre_id)
             // .then(response => response.json())
             .then(response => {
                 console.log("Status code is ", response.status)
@@ -20,7 +20,7 @@ export default class Genres extends Component {
             })
             .then(json => {
                 this.setState({
-                        genres: json.genres,
+                        movies: json.movies,
                         isLoaded: true
                     },
                     (error) => {
@@ -33,8 +33,11 @@ export default class Genres extends Component {
     }
 
     render() {
-        const {genres, isLoaded, error} = this.state
+        let {movies, isLoaded, error} = this.state
 
+        if (!movies) {
+            movies = []
+        }
         if (error) {
             return <div>Error: {error.message}</div>
         } else if (!isLoaded) {
@@ -43,17 +46,16 @@ export default class Genres extends Component {
             return (
                 <Fragment>
                     <div>
-                        <h2>Genres</h2>
-                        <ul>
-                            {genres.map((m, index) => (
-                                <li key={index}>
-                                    <Link to={`/genre/${m.id}`}>{m.genre_name}</Link>
-                                </li>
-                            ))}</ul>
+                        <h2>Genre: </h2>
+                        <div className="list-group">
+                            {movies.map((m, index) => (
+                                <Link key={index} to={`/movie/${m.id}`}
+                                      className="list-group-item list-group-item-action">{m.title}</Link>
+                            ))}
+                        </div>
                     </div>
                 </Fragment>
             )
         }
     }
-
 }

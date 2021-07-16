@@ -9,7 +9,41 @@ export default class Movies extends Component {
     }
 
     componentDidMount() {
+        // if (this.props.match.params.id) {
+        //     this.fetchAllByGenre();
+        //     return;
+        // }
+        this.fetchAll();
+    }
+
+    fetchAll = () => {
         fetch('http://localhost:4000/v1/movies')
+            // .then(response => response.json())
+            .then(response => {
+                console.log("Status code is ", response.status)
+                if (response.status !== "200") {
+                    let err = Error;
+                    err.message = "Invalid response code: " + response.status;
+                    this.setState({error: err})
+                }
+                return response.json()
+            })
+            .then(json => {
+                this.setState({
+                        movies: json.movies,
+                        isLoaded: true
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        })
+                    })
+            })
+    }
+
+    fetchAllByGenre = () => {
+        fetch('http://localhost:4000/v1/movies/' + this.props.match.params.id)
             // .then(response => response.json())
             .then(response => {
                 console.log("Status code is ", response.status)
@@ -47,7 +81,7 @@ export default class Movies extends Component {
                     <ul>
                         {movies.map((c) => (
                             <li key={c.id}>
-                                <Link to={`/movies/${c.id}`}>{c.title}</Link>
+                                <Link to={`/movie/${c.id}`}>{c.title}</Link>
                             </li>
                         ))}
                     </ul>

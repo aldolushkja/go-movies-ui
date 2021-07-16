@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Admin from './components/Admin';
 import OneMovie from "./components/OneMovie";
 import Genres from "./components/Genres";
+import OneGenre from "./components/OneGenre";
 
 export default function App() {
     return (
@@ -28,13 +29,12 @@ export default function App() {
                     </div>
                     <div className="col-md-10">
                         <Switch>
-                            <Route path="/movies/:id" component={OneMovie}/>
+                            <Route path="/movie/:id" component={OneMovie}/>
                             <Route path="/movies">
                                 <Movies/>
                             </Route>
-                            {/*<Route exact path="/movies/by-genre/:id">*/}
-                            {/*    <Movies/>*/}
-                            {/*</Route>*/}
+                            <Route path="/genre/:genre_id" component={OneGenre}/>
+                            {/*<OneGenre/>*/}
                             <Route exact path="/genres">
                                 <Genres/>
                             </Route>
