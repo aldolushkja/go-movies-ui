@@ -2,7 +2,6 @@ import {Link} from "react-router-dom";
 import React, {Component, Fragment} from "react";
 
 export default class Genres extends Component {
-    // let {path, url} = useRouteMatch();
 
     state = {genres: [], isLoaded: false, error: null}
 
@@ -44,15 +43,17 @@ export default class Genres extends Component {
                 <Fragment>
                     <div>
                         <h2>Genres</h2>
-                        <ul>
+                        <div className="list-group">
                             {genres.map((m, index) => (
-                                <li key={index}>
-                                    <Link to={{
-                                        pathname: `/genre/${m.id}`,
-                                        genre_name: m.genre_name,
-                                    }}>{m.genre_name}</Link>
-                                </li>
-                            ))}</ul>
+                                <Link key={index} to={{
+                                    pathname: `/genre/${m.id}`,
+                                    genre_name: m.genre_name,
+                                }}
+                                      className="list-group-item list-group-item-action"
+                                >{m.genre_name}</Link>
+
+                            ))}
+                        </div>
                     </div>
                 </Fragment>
             )
