@@ -20,7 +20,7 @@ export default class Genres extends Component {
             })
             .then(json => {
                 this.setState({
-                        genres: json.movies.genres,
+                        genres: json.genres,
                         isLoaded: true
                     },
                     (error) => {
@@ -40,11 +40,13 @@ export default class Genres extends Component {
         } else if (!isLoaded) {
             return <p>Loading....</p>
         } else {
+            console.log(genres)
+
             return (
                 <Fragment>
                     <div>
                         <h2>Genres</h2>
-                        <ul>s
+                        <ul>
                             {genres.map((m, index) => (
                                 <li key={index}>
                                     <Link to={`/genres/${m.id}`}>{m.genre_name}</Link>

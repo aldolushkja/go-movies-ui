@@ -21,7 +21,7 @@ export default function App() {
                             <ul className="list-group">
                                 <li className="list-group-item"><Link to="/">Home</Link></li>
                                 <li className="list-group-item"><Link to="/movies">Movies</Link></li>
-                                <li className="list-group-item"><Link to="/by-genres">Genres</Link></li>
+                                <li className="list-group-item"><Link to="/genres">Genres</Link></li>
                                 <li className="list-group-item"><Link to="/admin">Manage Catalogue</Link></li>
                             </ul>
                         </nav>
@@ -32,7 +32,10 @@ export default function App() {
                             <Route path="/movies">
                                 <Movies/>
                             </Route>
-                            <Route exact path="/by-genres">
+                            {/*<Route exact path="/movies/by-genre/:id">*/}
+                            {/*    <Movies/>*/}
+                            {/*</Route>*/}
+                            <Route exact path="/genres">
                                 <Genres/>
                             </Route>
                             {/*<Route exact path="/by-category/drama"*/}
