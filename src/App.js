@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Link, Route, Switch, useParams, useRouteMatch} 
 import Movies from './components/Movies';
 import Home from './components/Home';
 import Admin from './components/Admin';
-import Categories from "./components/Categories";
 import OneMovie from "./components/OneMovie";
+import Genres from "./components/Genres";
 
 export default function App() {
     return (
@@ -21,7 +21,7 @@ export default function App() {
                             <ul className="list-group">
                                 <li className="list-group-item"><Link to="/">Home</Link></li>
                                 <li className="list-group-item"><Link to="/movies">Movies</Link></li>
-                                <li className="list-group-item"><Link to="/by-category">Categories</Link></li>
+                                <li className="list-group-item"><Link to="/by-genres">Genres</Link></li>
                                 <li className="list-group-item"><Link to="/admin">Manage Catalogue</Link></li>
                             </ul>
                         </nav>
@@ -32,15 +32,15 @@ export default function App() {
                             <Route path="/movies">
                                 <Movies/>
                             </Route>
-                            <Route exact path="/by-category">
-                                <CategoryPage/>
+                            <Route exact path="/by-genres">
+                                <Genres/>
                             </Route>
-                            <Route exact path="/by-category/drama"
-                                   render={(props) => <Categories {...props} title={`Drama`}/>}>
-                            </Route>
-                            <Route exact path="/by-category/comedy"
-                                   render={(props) => <Categories {...props} title={`Comedy`}/>}>
-                            </Route>
+                            {/*<Route exact path="/by-category/drama"*/}
+                            {/*       render={(props) => <Genres {...props} title={`Drama`}/>}>*/}
+                            {/*</Route>*/}
+                            {/*<Route exact path="/by-category/comedy"*/}
+                            {/*       render={(props) => <Genres {...props} title={`Comedy`}/>}>*/}
+                            {/*</Route>*/}
                             <Route path="/admin">
                                 <Admin/>
                             </Route>
