@@ -7,7 +7,6 @@ import Select from "./form-components/Select";
 
 
 export default class EditMovie extends Component {
-    state = {movie: {}, isLoaded: false, error: null}
 
     constructor(props) {
         super(props);
@@ -55,45 +54,85 @@ export default class EditMovie extends Component {
     }
 
     componentDidMount() {
-
+        const id = this.props.match.params.id
+        if (id > 0) {
+            fetch("http://localhost:4000/v1/movie/" + id)
+                .then(response => {
+                    if (response.status !== "200") {
+                        let err = Error;
+                        err.Message = "Invalid response code: " + response.status
+                        this.setState({error: err})
+                    }
+                    return response.json()
+                })
+                .then(json => {
+                        console.log(json)
+                        const movie = json.movie
+                        const releaseDate = new Date(movie.release_date);
+                        this.setState({
+                            movie: {
+                                id: id,
+                                title: movie.title,
+                                release_date: releaseDate.toISOString().split("T")[0],
+                                runtime: movie.runtime,
+                                mpaa_rating: movie.mpaa_rating,
+                                rating: movie.rating,
+                                description: movie.description
+                            }, isLoaded: true, error: null
+                        })
+                    }, (error) => {
+                        this.setState({isLoaded: true, error: error})
+                    }
+                )
+        } else {
+            this.setState({isLoaded: true})
+        }
     }
 
     render() {
-        let {movie} = this.state
-        return (
-            <Fragment>
-                <h2>Add/Edit Movie</h2>
-                <hr/>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="hidden" name="id" id="id" value={movie.id} onChange={this.handleChange}/>
-                    <Input id={"title"} title={"Title"} name={"title"} value={movie.title}
-                           handleChange={this.handleChange}/>
-                    <Input id={"release_date"} title={"Release Date"} name={"release_date"} value={movie.release_date}
-                           type={"date"}
-                           handleChange={this.handleChange}/>
-                    <Input id={"runtime"} title={"Runtime"} name={"runtime"} value={movie.runtime}
-                           type={"text"}
-                           handleChange={this.handleChange}/>
-
-                    <Select title={"MPAA Rating"} name={"mpaa_rating"} value={movie.mpaa_rating}
-                            handleChange={this.handleChange}
-                            placeholder={"Choose..."}
-                            id={"mpaa_rating"} mpaaOptions={this.state.mpaaOptions}/>
-
-                    <Input id={"rating"} title={"Rating"} name={"rating"} value={movie.rating}
-                           type={"text"}
-                           handleChange={this.handleChange}/>
-
-                    <TextArea id={"description"} title={"Description"} name={"description"} value={movie.description}
-                              rows={"3"} handleChange={this.handleChange}/>
+        let {movie, isLoaded, error} = this.state
+        if (error) {
+            return <div>Error: {error.message}</div>
+        } else if (!isLoaded) {
+            return <p>Loading....</p>
+        } else {
+            return (
+                <Fragment>
+                    <h2>Add/Edit Movie</h2>
                     <hr/>
-                    <button className="btn btn-primary">Save</button>
-                </form>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="hidden" name="id" id="id" value={movie.id} onChange={this.handleChange}/>
+                        <Input id={"title"} title={"Title"} name={"title"} value={movie.title}
+                               handleChange={this.handleChange}/>
+                        <Input id={"release_date"} title={"Release Date"} name={"release_date"}
+                               value={movie.release_date}
+                               type={"date"}
+                               handleChange={this.handleChange}/>
+                        <Input id={"runtime"} title={"Runtime"} name={"runtime"} value={movie.runtime}
+                               type={"text"}
+                               handleChange={this.handleChange}/>
 
-                <div className="mt-3">
-                    <pre>{JSON.stringify(this.state, null, 3)}</pre>
-                </div>
-            </Fragment>
-        );
+                        <Select title={"MPAA Rating"} name={"mpaa_rating"} value={movie.mpaa_rating}
+                                handleChange={this.handleChange}
+                                placeholder={"Choose..."}
+                                id={"mpaa_rating"} mpaaOptions={this.state.mpaaOptions}/>
+
+                        <Input id={"rating"} title={"Rating"} name={"rating"} value={movie.rating}
+                               type={"text"}
+                               handleChange={this.handleChange}/>
+
+                        <TextArea id={"description"} title={"Description"} name={"description"}
+                                  value={movie.description}
+                                  rows={"3"} handleChange={this.handleChange}/>
+                        <hr/>
+                        <button className="btn btn-primary">Save</button>
+                    </form>
+
+                    <div className="mt-3">
+                        <pre>{JSON.stringify(this.state, null, 3)}</pre>
+                    </div>
+                </Fragment>
+            );
+        }
     }
 }
