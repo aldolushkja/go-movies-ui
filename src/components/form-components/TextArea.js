@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = (props) => {
+const TextArea = (props) => {
     return (
         <div className="mb-3">
             <label htmlFor={props.name} className="form-label">{props.title}</label>
@@ -13,4 +13,4 @@ const Input = (props) => {
     )
 }
 
-export default Input;
+export default TextArea;
