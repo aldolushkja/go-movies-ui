@@ -4,6 +4,7 @@ import Input from "./form-components/Input";
 import "./EditMovie.css"
 import TextArea from "./form-components/TextArea";
 import Select from "./form-components/Select";
+import Alert from "./ui-components/Alert";
 
 
 export default class EditMovie extends Component {
@@ -31,6 +32,10 @@ export default class EditMovie extends Component {
             isLoaded: false,
             error: null,
             errors: [],
+            alert: {
+                type: "d-none",
+                message: "",
+            }
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -64,7 +69,23 @@ export default class EditMovie extends Component {
 
         fetch("http://localhost:4000/v1/admin/editmovie", requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.error) {
+                    this.setState({
+                        alert: {
+                            type: "alert-danger",
+                            message: data.error.message
+                        }
+                    })
+                } else {
+                    this.setState({
+                        alert: {
+                            type: "alert-success",
+                            message: "Changes saved!"
+                        }
+                    })
+                }
+            })
     }
 
     handleChange = (evt) => {
@@ -127,7 +148,10 @@ export default class EditMovie extends Component {
         } else {
             return (
                 <Fragment>
-                    <h2>Add/Edit Movie</h2>
+                    <h2>{movie.id === 0 ? "Add" : "Edit"} Movie</h2>
+                    <Alert
+                        alertType={this.state.alert.type}
+                        alertMessage={this.state.alert.message}/>
                     <hr/>
                     <form onSubmit={this.handleSubmit}>
                         <input type="hidden" name="id" id="id" value={movie.id} onChange={this.handleChange}/>
@@ -162,12 +186,12 @@ export default class EditMovie extends Component {
                                   value={movie.description}
                                   rows={"3"} handleChange={this.handleChange}/>
                         <hr/>
-                        <button className="btn btn-primary">Save</button>
+                        <button className="btn btn-primary">{movie.id === 0 ? "Save" : "Edit"}</button>
                     </form>
 
-                    <div className="mt-3">
-                        <pre>{JSON.stringify(this.state, null, 3)}</pre>
-                    </div>
+                    {/*<div className="mt-3">*/}
+                    {/*    <pre>{JSON.stringify(this.state, null, 3)}</pre>*/}
+                    {/*</div>*/}
                 </Fragment>
             );
         }
