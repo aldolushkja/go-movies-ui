@@ -86,6 +86,9 @@ export default class EditMovie extends Component {
               message: "Changes saved!",
             },
           });
+          this.props.history.push({
+            pathname: "/admin",
+          });
         }
       });
   };
