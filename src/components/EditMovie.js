@@ -112,43 +112,49 @@ export default class EditMovie extends Component {
   };
 
   componentDidMount() {
-    console.log("JWT id EditMovie componentDidMount: ", this.props.jwt);
-    const id = this.props.match.params.id;
-    if (id > 0) {
-      fetch("http://localhost:4000/v1/movie/" + id)
-        .then((response) => {
-          if (response.status !== "200") {
-            let err = Error;
-            err.Message = "Invalid response code: " + response.status;
-            this.setState({ error: err });
-          }
-          return response.json();
-        })
-        .then(
-          (json) => {
-            console.log(json);
-            const movie = json.movie;
-            const releaseDate = new Date(movie.release_date);
-            this.setState({
-              movie: {
-                id: id,
-                title: movie.title,
-                release_date: releaseDate.toISOString().split("T")[0],
-                runtime: movie.runtime,
-                mpaa_rating: movie.mpaa_rating,
-                rating: movie.rating,
-                description: movie.description,
-              },
-              isLoaded: true,
-              error: null,
-            });
-          },
-          (error) => {
-            this.setState({ isLoaded: true, error: error });
-          }
-        );
+    if (this.props.jwt === "") {
+      this.props.history.push({
+        pathname: "/login",
+      });
+      return;
     } else {
-      this.setState({ isLoaded: true });
+      const id = this.props.match.params.id;
+      if (id > 0) {
+        fetch("http://localhost:4000/v1/movie/" + id)
+          .then((response) => {
+            if (response.status !== "200") {
+              let err = Error;
+              err.Message = "Invalid response code: " + response.status;
+              this.setState({ error: err });
+            }
+            return response.json();
+          })
+          .then(
+            (json) => {
+              console.log(json);
+              const movie = json.movie;
+              const releaseDate = new Date(movie.release_date);
+              this.setState({
+                movie: {
+                  id: id,
+                  title: movie.title,
+                  release_date: releaseDate.toISOString().split("T")[0],
+                  runtime: movie.runtime,
+                  mpaa_rating: movie.mpaa_rating,
+                  rating: movie.rating,
+                  description: movie.description,
+                },
+                isLoaded: true,
+                error: null,
+              });
+            },
+            (error) => {
+              this.setState({ isLoaded: true, error: error });
+            }
+          );
+      } else {
+        this.setState({ isLoaded: true });
+      }
     }
   }
 
