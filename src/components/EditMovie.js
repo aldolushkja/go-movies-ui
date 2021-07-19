@@ -166,18 +166,16 @@ export default class EditMovie extends Component {
         {
           label: "Yes",
           onClick: () => {
-            let myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + this.props.jwt);
-
-            const requestOptions = {
-              headers: myHeaders,
-              method: "GET",
-            };
             fetch(
               "http://localhost:4000/v1/admin/deletemovie/" +
                 this.state.movie.id,
-              requestOptions
+              {
+                headers: myHeaders,
+                method: "GET",
+              }
             )
               .then((response) => response.json())
               .then((data) => {
@@ -202,10 +200,6 @@ export default class EditMovie extends Component {
         },
       ],
     });
-  };
-
-  deleteMovie = () => {
-    console.log("would delete movie id ", this.state.movie.id);
   };
 
   render() {
