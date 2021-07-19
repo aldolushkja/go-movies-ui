@@ -21,7 +21,17 @@ export default class App extends Component {
 
   logout = () => {
     this.setState({ jwt: "" });
+    window.localStorage.removeItem("jwt");
   };
+
+  componentDidMount() {
+    let token = window.localStorage.getItem("jwt");
+    if (token) {
+      if (this.state.jwt === "") {
+        this.setState({ jwt: JSON.parse(token) });
+      }
+    }
+  }
   render() {
     let loginLink;
     if (this.state.jwt === "") {
