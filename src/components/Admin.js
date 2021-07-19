@@ -4,7 +4,14 @@ import { Link } from "react-router-dom";
 export default class Admin extends Component {
   state = { movies: [], isLoaded: false, error: null };
   componentDidMount() {
-    this.fetchAllMovies();
+    if (this.props.jwt === "") {
+      this.props.history.push({
+        pathname: "/login",
+      });
+      return;
+    } else {
+      this.fetchAllMovies();
+    }
   }
 
   fetchAllMovies = () => {
