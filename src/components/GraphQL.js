@@ -25,7 +25,13 @@ export default class GraphQL extends Component {
       [name]: value,
     }));
 
-    this.performSearch();
+    if (value.length > 2) {
+      this.performSearch();
+    } else {
+      this.setState({
+        movies: [],
+      });
+    }
   };
 
   performSearch = () => {
