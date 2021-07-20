@@ -15,6 +15,7 @@ export default class OneMovieGraphQL extends Component {
                     release_date
                     rating
                     mpaa_rating
+                    poster
                 }
             }`;
     const myHeader = new Headers();
@@ -48,6 +49,15 @@ export default class OneMovieGraphQL extends Component {
           <h2>
             Movie: {movie.title} {movie.year}
           </h2>
+
+          {movie.poster !== "" && (
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movie.poster}`}
+                alt="poster"
+              />
+            </div>
+          )}
 
           <div className="float-start">
             <small>Rating: {movie.mpaa_rating}</small>
