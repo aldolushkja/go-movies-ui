@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import React, { Component, Fragment } from "react";
+import {Link} from "react-router-dom";
+import React, {Component, Fragment} from "react";
 
 export default class Genres extends Component {
-  state = { genres: [], isLoaded: false, error: null };
+    state = {genres: [], isLoaded: false, error: null};
 
-  componentDidMount() {
-    fetch("http://localhost:4000/v1/genres")
-      // .then(response => response.json())
-      .then((response) => {
-        console.log("Status code is ", response.status);
-        if (response.status !== "200") {
+    componentDidMount() {
+        fetch(`${process.env.REACT_APP_API_URL}/v1/genres`)
+            // .then(response => response.json())
+            .then((response) => {
+                console.log("Status code is ", response.status);
+                if (response.status !== "200") {
           let err = Error;
           err.message = "Invalid response code: " + response.status;
           this.setState({ error: err });

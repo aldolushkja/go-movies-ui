@@ -7,7 +7,7 @@ export default class OneGenre extends Component {
     state = {movies: [], isLoaded: false, error: null, genreName: ""}
 
     componentDidMount() {
-        fetch('http://localhost:4000/v1/movies/' + this.props.match.params.genre_id)
+        fetch(`${process.env.REACT_APP_API_URL}/v1/movies/` + this.props.match.params.genre_id)
             // .then(response => response.json())
             .then(response => {
                 console.log("Status code is ", response.status)

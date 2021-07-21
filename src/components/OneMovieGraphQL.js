@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, {Component, Fragment} from "react";
 
 export default class OneMovieGraphQL extends Component {
   state = { movie: {}, isLoaded: false, error: null };
@@ -27,7 +27,7 @@ export default class OneMovieGraphQL extends Component {
       headers: myHeader,
     };
 
-    fetch("http://localhost:4000/v1/graphql", requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}/v1/graphql`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         this.setState({

@@ -17,7 +17,7 @@ export default class Movies extends Component {
     }
 
     fetchAll = () => {
-        fetch('http://localhost:4000/v1/movies')
+        fetch(`${process.env.REACT_APP_API_URL}/v1/movies`)
             // .then(response => response.json())
             .then(response => {
                 console.log("Status code is ", response.status)
@@ -43,7 +43,7 @@ export default class Movies extends Component {
     }
 
     fetchAllByGenre = () => {
-        fetch('http://localhost:4000/v1/movies/' + this.props.match.params.id)
+        fetch(`${process.env.REACT_APP_API_URL}/v1/movies/` + this.props.match.params.id)
             // .then(response => response.json())
             .then(response => {
                 console.log("Status code is ", response.status)

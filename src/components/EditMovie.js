@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, {Component, Fragment} from "react";
+import {Link} from "react-router-dom";
 
-import { confirmAlert } from "react-confirm-alert";
+import {confirmAlert} from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import Input from "./form-components/Input";
@@ -72,7 +72,7 @@ export default class EditMovie extends Component {
       body: JSON.stringify(payload),
     };
 
-    fetch("http://localhost:4000/v1/admin/editmovie", requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}/v1/admin/editmovie`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -120,7 +120,7 @@ export default class EditMovie extends Component {
     } else {
       const id = this.props.match.params.id;
       if (id > 0) {
-        fetch("http://localhost:4000/v1/movie/" + id)
+        fetch(`${process.env.REACT_APP_API_URL}/v1/movie/` + id)
           .then((response) => {
             if (response.status !== "200") {
               let err = Error;
@@ -170,7 +170,7 @@ export default class EditMovie extends Component {
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + this.props.jwt);
             fetch(
-              "http://localhost:4000/v1/admin/deletemovie/" +
+                `${process.env.REACT_APP_API_URL}/v1/admin/deletemovie/` +
                 this.state.movie.id,
               {
                 headers: myHeaders,
