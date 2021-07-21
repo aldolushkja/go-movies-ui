@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import React, {Component, Fragment} from "react";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import Movies from "./components/Movies";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
@@ -46,17 +46,17 @@ export default class App extends Component {
       );
     }
     return (
-      <Router>
-        <div className="container">
-          <div className="row">
-            <div className="col mt-3">
-              <h1 className="mt-3">Go Watch a Movie!</h1>
+        <Router basename={"/movies"}>
+          <div className="container">
+            <div className="row">
+              <div className="col mt-3">
+                <h1 className="mt-3">Go Watch a Movie!</h1>
+              </div>
+              <div className="col mt-3 text-end">{loginLink}</div>
+              <hr className="mb-3"/>
             </div>
-            <div className="col mt-3 text-end">{loginLink}</div>
-            <hr className="mb-3" />
-          </div>
 
-          <div className="row">
+            <div className="row">
             <div className="col-md-2">
               <nav>
                 <ul className="list-group">
