@@ -1,9 +1,9 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 
 
 export default class OneMovie extends Component {
 
-    state = {movie: {}, isLoaded: false, error: null}
+    state = { movie: {}, isLoaded: false, error: null }
 
     componentDidMount() {
         fetch(`${process.env.REACT_APP_API_URL}/v1/movie/` + this.props.match.params.id)
@@ -13,15 +13,15 @@ export default class OneMovie extends Component {
                 if (response.status !== "200") {
                     let err = Error;
                     err.message = "Invalid response code: " + response.status;
-                    this.setState({error: err})
+                    this.setState({ error: err })
                 }
                 return response.json()
             })
             .then(json => {
                 this.setState({
-                        movie: json.movie,
-                        isLoaded: true
-                    },
+                    movie: json.movie,
+                    isLoaded: true
+                },
                     (error) => {
                         this.setState({
                             isLoaded: true,
@@ -32,7 +32,7 @@ export default class OneMovie extends Component {
     }
 
     render() {
-        const {movie, isLoaded, error} = this.state;
+        const { movie, isLoaded, error } = this.state;
         if (movie.genres) {
             movie.genres = Object.values(movie.genres);
         } else {
@@ -58,23 +58,23 @@ export default class OneMovie extends Component {
                             </span>
                         ))}
                     </div>
-                    <div className="clearfix"/>
-                    <hr/>
+                    <div className="clearfix" />
+                    <hr />
                     <table className="table table-compact table-striped">
                         <thead></thead>
                         <tbody>
-                        <tr>
-                            <td><strong>Title:</strong></td>
-                            <td>{movie.title}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Runtime:</strong></td>
-                            <td>{movie.runtime} minutes</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Description:</strong></td>
-                            <td>{movie.description} minutes</td>
-                        </tr>
+                            <tr>
+                                <td><strong>Title:</strong></td>
+                                <td>{movie.title}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Runtime:</strong></td>
+                                <td>{movie.runtime} minutes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description:</strong></td>
+                                <td>{movie.description} minutes</td>
+                            </tr>
                         </tbody>
                     </table>
 

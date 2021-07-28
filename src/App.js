@@ -28,9 +28,10 @@ export default class App extends Component {
 
   componentDidMount() {
     let token = window.localStorage.getItem("jwt");
+    console.log(token);
     if (token) {
       if (this.state.jwt === "") {
-        this.setState({ jwt: JSON.parse(token) });
+        this.setState({ jwt: token });
       }
     }
   }
@@ -46,7 +47,7 @@ export default class App extends Component {
       );
     }
     return (
-        <Router basename={"/movies"}>
+        <Router>
           <div className="container">
             <div className="row">
               <div className="col mt-3">
